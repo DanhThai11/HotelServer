@@ -1069,6 +1069,9 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Charset>utf8mb4</Charset>
     </collation>
     <schema id="288" parent="1" name="RexHotel">
+      <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
+      <LastIntrospectionLevel>3</LastIntrospectionLevel>
+      <LastIntrospectionLocalTimestamp>2025-05-22.14:24:42</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="Shopping">
@@ -1116,27 +1119,641 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="303" parent="1" name="user">
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
-    <user id="304" parent="1" name="mysql.infoschema">
+    <schema id="304" parent="1" name="lakeSide_hotel_db">
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </schema>
+    <user id="305" parent="1" name="mysql.infoschema">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="305" parent="1" name="mysql.session">
+    <user id="306" parent="1" name="mysql.session">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="306" parent="1" name="mysql.sys">
+    <user id="307" parent="1" name="mysql.sys">
       <CanLogin>0</CanLogin>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="307" parent="1" name="root">
+    <user id="308" parent="1" name="root">
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <user id="308" parent="1" name="springstudent">
+    <user id="309" parent="1" name="springstudent">
       <Plugin>caching_sha2_password</Plugin>
     </user>
+    <scheduled-event id="310" parent="288" name="delete_expired_tokens">
+      <Definer>springstudent@%</Definer>
+      <DetailsLevel>3</DetailsLevel>
+      <Interval>&apos;12&apos; HOUR</Interval>
+      <LastExecuted>2025-05-21.20:15:38</LastExecuted>
+      <SourceTextLength>55</SourceTextLength>
+      <Starts>&apos;2025-05-03 01:15:37&apos;</Starts>
+      <Status>enabled</Status>
+    </scheduled-event>
+    <scheduled-event id="311" parent="288" name="delete_expired_tokens_email">
+      <Definer>springstudent@%</Definer>
+      <DetailsLevel>3</DetailsLevel>
+      <Interval>&apos;12&apos; HOUR</Interval>
+      <LastExecuted>2025-05-21.20:20:17</LastExecuted>
+      <SourceTextLength>62</SourceTextLength>
+      <Starts>&apos;2025-05-03 01:20:17&apos;</Starts>
+      <Status>enabled</Status>
+    </scheduled-event>
+    <table id="312" parent="288" name="bill_items">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="313" parent="288" name="bill_services">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="314" parent="288" name="bills">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="315" parent="288" name="bookings">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="316" parent="288" name="email_verification_token">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="317" parent="288" name="invalidated_token">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="318" parent="288" name="inventory_items">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="319" parent="288" name="room_amenities">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="320" parent="288" name="rooms">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="321" parent="288" name="services">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="322" parent="288" name="user">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="323" parent="312" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="324" parent="312" name="price">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="325" parent="312" name="quantity">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="326" parent="312" name="bill_id">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="327" parent="312" name="inventory_item_id">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <foreign-key id="328" parent="312" name="FKj9o7g8krc56gf6t6f0sy4ic5p">
+      <ColNames>bill_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>bills</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <foreign-key id="329" parent="312" name="FKlqbbkcoef9oq9m8dxvh522lut">
+      <ColNames>inventory_item_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>inventory_items</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="330" parent="312" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="331" parent="312" name="FKj9o7g8krc56gf6t6f0sy4ic5p">
+      <ColNames>bill_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="332" parent="312" name="FKlqbbkcoef9oq9m8dxvh522lut">
+      <ColNames>inventory_item_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="333" parent="312" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="334" parent="313" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="335" parent="313" name="price">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="336" parent="313" name="quantity">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="337" parent="313" name="bill_id">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="338" parent="313" name="service_id">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <foreign-key id="339" parent="313" name="FKjo2y9fh36lhnk2alkme44xwyt">
+      <ColNames>bill_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>bills</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <foreign-key id="340" parent="313" name="FKgp0yxy5a9kiqlq4knmbsfro13">
+      <ColNames>service_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>services</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="341" parent="313" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="342" parent="313" name="FKjo2y9fh36lhnk2alkme44xwyt">
+      <ColNames>bill_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="343" parent="313" name="FKgp0yxy5a9kiqlq4knmbsfro13">
+      <ColNames>service_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="344" parent="313" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="345" parent="314" name="id">
+      <AutoIncrement>9</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="346" parent="314" name="created_at">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="347" parent="314" name="paid_at">
+      <Position>3</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="348" parent="314" name="room_charge">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="349" parent="314" name="status">
+      <Position>5</Position>
+      <StoredType>enum(&apos;PENDING&apos;, &apos;PAID&apos;, &apos;CANCELLED&apos;)|0e</StoredType>
+    </column>
+    <column id="350" parent="314" name="total_amount">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="351" parent="314" name="booking_id">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <foreign-key id="352" parent="314" name="FKgsfn7nc5tfw993yjtt19nr3lr">
+      <ColNames>booking_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>bookings</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="353" parent="314" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="354" parent="314" name="UK_87bqhfgiufwg0y82uf4i2lbs9">
+      <ColNames>booking_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="355" parent="314" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="356" parent="314" name="UK_87bqhfgiufwg0y82uf4i2lbs9">
+      <UnderlyingIndexName>UK_87bqhfgiufwg0y82uf4i2lbs9</UnderlyingIndexName>
+    </key>
+    <column id="357" parent="315" name="id">
+      <AutoIncrement>9</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="358" parent="315" name="check_in_date">
+      <Position>2</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="359" parent="315" name="check_out_date">
+      <Position>3</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="360" parent="315" name="created_at">
+      <Position>4</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="361" parent="315" name="number_of_guests">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="362" parent="315" name="special_requests">
+      <Position>6</Position>
+      <StoredType>varchar(500)|0s</StoredType>
+    </column>
+    <column id="363" parent="315" name="status">
+      <Position>7</Position>
+      <StoredType>enum(&apos;PENDING&apos;, &apos;CONFIRMED&apos;, &apos;CHECKED_IN&apos;, &apos;COMPLETED&apos;, &apos;CANCELLED&apos;)|0e</StoredType>
+    </column>
+    <column id="364" parent="315" name="total_amount">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="365" parent="315" name="updated_at">
+      <Position>9</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="366" parent="315" name="room_id">
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="367" parent="315" name="user_id">
+      <NotNull>1</NotNull>
+      <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <foreign-key id="368" parent="315" name="FKrgoycol97o21kpjodw1qox4nc">
+      <ColNames>room_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>rooms</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <foreign-key id="369" parent="315" name="FK65bh1tn1y443fxcah5u36e8fy">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="370" parent="315" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="371" parent="315" name="FKrgoycol97o21kpjodw1qox4nc">
+      <ColNames>room_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="372" parent="315" name="FK65bh1tn1y443fxcah5u36e8fy">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="373" parent="315" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="374" parent="316" name="id">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="375" parent="316" name="expiry_date">
+      <Position>2</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="376" parent="316" name="token">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="377" parent="316" name="user_id">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <foreign-key id="378" parent="316" name="FKqmvt3qcly3hbvde97srchdo3x">
+      <ColNames>user_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="379" parent="316" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="380" parent="316" name="UK_1sxbwflvq4skafkocq315i9dt">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="381" parent="316" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="382" parent="316" name="UK_1sxbwflvq4skafkocq315i9dt">
+      <UnderlyingIndexName>UK_1sxbwflvq4skafkocq315i9dt</UnderlyingIndexName>
+    </key>
+    <column id="383" parent="317" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="384" parent="317" name="expiry_time">
+      <Position>2</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <index id="385" parent="317" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="386" parent="317" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="387" parent="318" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="388" parent="318" name="category">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>enum(&apos;BEVERAGE&apos;, &apos;SNACK&apos;, &apos;TOILETRIES&apos;, &apos;BEDDING&apos;, &apos;CLEANING&apos;, &apos;OTHER&apos;)|0e</StoredType>
+    </column>
+    <column id="389" parent="318" name="code">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="390" parent="318" name="created_at">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="391" parent="318" name="description">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="392" parent="318" name="last_restock_at">
+      <Position>6</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <column id="393" parent="318" name="min_quantity">
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="394" parent="318" name="name">
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="395" parent="318" name="price">
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="396" parent="318" name="quantity">
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="397" parent="318" name="supplier">
+      <Position>11</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="398" parent="318" name="unit">
+      <NotNull>1</NotNull>
+      <Position>12</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="399" parent="318" name="updated_at">
+      <Position>13</Position>
+      <StoredType>datetime(6)|0s</StoredType>
+    </column>
+    <index id="400" parent="318" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="401" parent="318" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="402" parent="319" name="room_id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="403" parent="319" name="amenity">
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <foreign-key id="404" parent="319" name="FKps6ofup9gxhn8juqvproxbaud">
+      <ColNames>room_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>rooms</RefTableName>
+      <RefTableParentName>rexhotel</RefTableParentName>
+    </foreign-key>
+    <index id="405" parent="319" name="FKps6ofup9gxhn8juqvproxbaud">
+      <ColNames>room_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <column id="406" parent="320" name="id">
+      <AutoIncrement>7</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="407" parent="320" name="capacity">
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="408" parent="320" name="description">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="409" parent="320" name="price">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <column id="410" parent="320" name="room_number">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="411" parent="320" name="status">
+      <Position>6</Position>
+      <StoredType>enum(&apos;AVAILABLE&apos;, &apos;OCCUPIED&apos;, &apos;MAINTENANCE&apos;, &apos;RESERVED&apos;)|0e</StoredType>
+    </column>
+    <column id="412" parent="320" name="type">
+      <Position>7</Position>
+      <StoredType>enum(&apos;STANDARD&apos;, &apos;DELUXE&apos;, &apos;SUITE&apos;, &apos;EXECUTIVE&apos;)|0e</StoredType>
+    </column>
+    <column id="413" parent="320" name="image_url">
+      <Position>8</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <index id="414" parent="320" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="415" parent="320" name="UK_7ljglxlj90ln3lbas4kl983m2">
+      <ColNames>room_number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="416" parent="320" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="417" parent="320" name="UK_7ljglxlj90ln3lbas4kl983m2">
+      <UnderlyingIndexName>UK_7ljglxlj90ln3lbas4kl983m2</UnderlyingIndexName>
+    </key>
+    <column id="418" parent="321" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>bigint|0s</StoredType>
+    </column>
+    <column id="419" parent="321" name="category">
+      <Position>2</Position>
+      <StoredType>enum(&apos;HOUSEKEEPING&apos;, &apos;LAUNDRY&apos;, &apos;FOOD&apos;, &apos;SPA&apos;, &apos;TRANSPORT&apos;, &apos;OTHER&apos;)|0e</StoredType>
+    </column>
+    <column id="420" parent="321" name="description">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="421" parent="321" name="is_available">
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>bit(1)|0s</StoredType>
+    </column>
+    <column id="422" parent="321" name="name">
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="423" parent="321" name="price">
+      <NotNull>1</NotNull>
+      <Position>6</Position>
+      <StoredType>decimal(38,2 digit)|0s</StoredType>
+    </column>
+    <index id="424" parent="321" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="425" parent="321" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="426" parent="322" name="id">
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="427" parent="322" name="email">
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="428" parent="322" name="full_name">
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="429" parent="322" name="password">
+      <Position>4</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="430" parent="322" name="phone_number">
+      <Position>5</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="431" parent="322" name="roles">
+      <Position>6</Position>
+      <StoredType>varbinary(255)|0s</StoredType>
+    </column>
+    <column id="432" parent="322" name="username">
+      <Position>7</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="433" parent="322" name="account_status">
+      <Position>8</Position>
+      <StoredType>enum(&apos;INACTIVE&apos;, &apos;ACTIVE&apos;)|0e</StoredType>
+    </column>
+    <index id="434" parent="322" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="435" parent="322" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>
