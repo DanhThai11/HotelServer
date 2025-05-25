@@ -18,6 +18,5 @@ public class RoomResponse {
      String type;
      int capacity;
      String status;
-     String imagePath;
-
+     String photo;
 }

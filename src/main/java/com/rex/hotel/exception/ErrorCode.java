@@ -31,6 +31,9 @@ public enum ErrorCode {
     BOOKING_NOT_FOUND(1023,"Booking not found", HttpStatus.BAD_REQUEST),
     ITEM_NOT_FOUND(1024,"Item not found", HttpStatus.BAD_REQUEST),
     SERVICE_NOT_FOUND(1025,"Service not found", HttpStatus.BAD_REQUEST),
+    ROOMS_HAVE_BOOKINGS(1026,"Phòng đã được đặt trong khoảng thời gian này", HttpStatus.BAD_REQUEST),
+    ROOM_NOT_AVAILABLE(1027,"Phòng không khả dụng", HttpStatus.BAD_REQUEST),
+    INVALID_ROOM_TYPE(1028,"Loại phòng không hợp lệ", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatus status) {

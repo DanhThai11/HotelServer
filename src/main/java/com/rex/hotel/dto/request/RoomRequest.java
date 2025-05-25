@@ -4,6 +4,7 @@ import com.rex.hotel.enums.RoomStatus;
 import com.rex.hotel.enums.RoomType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 @Getter
@@ -21,4 +22,5 @@ public class RoomRequest {
     RoomType type;
     int capacity;
     RoomStatus status;
+    MultipartFile photo;
 }

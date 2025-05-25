@@ -16,8 +16,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-22T21:02:19+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.2 (Eclipse Adoptium)"
+    date = "2025-05-25T04:09:08+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class BillMapperImpl implements BillMapper {
@@ -31,14 +31,14 @@ public class BillMapperImpl implements BillMapper {
         BillResponse.BillResponseBuilder billResponse = BillResponse.builder();
 
         billResponse.bookingId( billBookingId( bill ) );
-        billResponse.id( bill.getId() );
-        billResponse.roomCharge( bill.getRoomCharge() );
-        billResponse.items( toBillItemResponses( bill.getItems() ) );
-        billResponse.services( toBillServiceResponses( bill.getServices() ) );
-        billResponse.totalAmount( bill.getTotalAmount() );
-        billResponse.status( bill.getStatus() );
         billResponse.createdAt( bill.getCreatedAt() );
+        billResponse.id( bill.getId() );
+        billResponse.items( toBillItemResponses( bill.getItems() ) );
         billResponse.paidAt( bill.getPaidAt() );
+        billResponse.roomCharge( bill.getRoomCharge() );
+        billResponse.services( toBillServiceResponses( bill.getServices() ) );
+        billResponse.status( bill.getStatus() );
+        billResponse.totalAmount( bill.getTotalAmount() );
 
         return billResponse.build();
     }
@@ -81,8 +81,8 @@ public class BillMapperImpl implements BillMapper {
 
         billItemResponse.itemName( billItemItemName( billItem ) );
         billItemResponse.id( billItem.getId() );
-        billItemResponse.quantity( billItem.getQuantity() );
         billItemResponse.price( billItem.getPrice() );
+        billItemResponse.quantity( billItem.getQuantity() );
 
         return billItemResponse.build();
     }
@@ -97,8 +97,8 @@ public class BillMapperImpl implements BillMapper {
 
         billServiceResponse.serviceName( billServiceServiceName( billService ) );
         billServiceResponse.id( billService.getId() );
-        billServiceResponse.quantity( billService.getQuantity() );
         billServiceResponse.price( billService.getPrice() );
+        billServiceResponse.quantity( billService.getQuantity() );
 
         return billServiceResponse.build();
     }

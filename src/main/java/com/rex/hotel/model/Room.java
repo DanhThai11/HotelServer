@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.List;
 
 @Getter
@@ -45,9 +46,9 @@ public class Room {
     @Column
      String description;
 
-    @Column(name = "image_url")
-     String imagePath;
-
+    @Lob
+    @Column(name = "photo")
+     Blob photo;
 }
 
 

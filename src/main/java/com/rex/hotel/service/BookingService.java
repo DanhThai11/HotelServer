@@ -109,14 +109,15 @@ public class BookingService {
 
         // Kiểm tra trùng lịch phòng
         boolean isRoomAvailable = bookingRepository
-                .findByRoomAndCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqual(
-                        room, request.getCheckOutDate(), request.getCheckInDate()).isEmpty();
+                .findActiveBookingsForRoom(room, request.getCheckInDate(), request.getCheckOutDate())
+                .isEmpty();
 
         if (!isRoomAvailable) {
-            throw new IllegalStateException("Phòng đã được đặt trong khoảng thời gian này");
+            throw new AppException(ErrorCode.ROOMS_HAVE_BOOKINGS);
         }
         BigDecimal totalAmount = calculateTotalAmount(room, request.getCheckInDate(), request.getCheckOutDate());
 
+        // Chỉ cập nhật trạng thái phòng khi đặt phòng thành công
         room.setStatus(RoomStatus.RESERVED);
         roomRepository.save(room);
 

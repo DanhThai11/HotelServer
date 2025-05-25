@@ -23,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rooms")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class RoomController {
     private final RoomService roomService;
     private final InventoryItemService itemService;
@@ -56,28 +55,22 @@ public class RoomController {
                 .build());
     }
 
-    @PostMapping("/{roomId}/image")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RoomResponse> uploadRoomImage(
-            @PathVariable Long roomId,
-            @RequestParam("file") MultipartFile file) {
-        return ResponseEntity.ok(roomService.uploadRoomImage(roomId, file));
-    }
-
     @GetMapping("/available")
     public ResponseEntity<ApiResponse<List<RoomResponse>>> getAvailableRooms(
             @RequestParam String checkIn,
-            @RequestParam String checkOut) {
+            @RequestParam String checkOut,
+            @RequestParam(required = false) String roomType) {
         return ResponseEntity.ok(ApiResponse.<List<RoomResponse>>builder()
                 .message("Lấy danh sách phòng trống thành công")
-                .result(roomService.getAvailableRooms(checkIn, checkOut))
+                .result(roomService.getAvailableRooms(checkIn, checkOut, roomType))
                 .build());
     }
 
 
 
     @PostMapping
-    public ResponseEntity<ApiResponse<RoomResponse>> createRoom(@Valid @RequestBody RoomRequest room) {
+    public ResponseEntity<ApiResponse<RoomResponse>> createRoom(
+            @Valid @ModelAttribute RoomRequest room) {
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.<RoomResponse>builder()
                         .message("Phòng đã được tạo thành công")
@@ -87,7 +80,9 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(@PathVariable Long id, @Valid @RequestBody RoomRequest room) {
+    public ResponseEntity<ApiResponse<RoomResponse>> updateRoom(
+            @PathVariable Long id,
+            @Valid @ModelAttribute RoomRequest room) {
         return ResponseEntity.ok(ApiResponse.<RoomResponse>builder()
                 .message("Phòng đã được cập nhật thành công")
                 .result(roomService.updateRoom(id, room))

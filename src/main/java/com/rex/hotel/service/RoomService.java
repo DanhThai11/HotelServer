@@ -10,6 +10,9 @@ import com.rex.hotel.mapper.RoomMapper;
 import com.rex.hotel.model.Room;
 import com.rex.hotel.repository.RoomRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityManager;
+import org.hibernate.engine.jdbc.LobCreator;
+import org.hibernate.engine.jdbc.LobCreationContext;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,25 +21,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RoomService {
     RoomRepository roomRepository;
     RoomMapper roomMapper;
+    EntityManager entityManager;
 
     public List<RoomResponse> getAllRooms() {
         return roomRepository.findAll()
@@ -51,20 +54,59 @@ public class RoomService {
                 .toList();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public RoomResponse getRoomById(Long id) {
         Room room = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
         return roomMapper.toRoomResponse(room);
     }
 
-    public List<RoomResponse> getAvailableRooms(String checkIn, String checkOut) {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime checkInDate = LocalDateTime.parse(checkIn, formatter);
-        LocalDateTime checkOutDate = LocalDateTime.parse(checkOut, formatter);
+    public List<RoomResponse> getAvailableRooms(String checkIn, String checkOut, String roomType) {
+        LocalDateTime checkInDate;
+        LocalDateTime checkOutDate;
+        
+        try {
+            // Thử parse với định dạng ISO_DATE_TIME (yyyy-MM-dd'T'HH:mm:ss)
+            DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_DATE_TIME;
+            checkInDate = LocalDateTime.parse(checkIn, isoFormatter);
+            checkOutDate = LocalDateTime.parse(checkOut, isoFormatter);
+            System.out.println("Parse thành công với ISO_DATE_TIME: " + checkInDate + " - " + checkOutDate);
+        } catch (DateTimeParseException e) {
+            try {
+                // Nếu không được, thử parse với định dạng ISO_DATE (yyyy-MM-dd)
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ISO_DATE;
+                checkInDate = LocalDate.parse(checkIn, dateFormatter).atStartOfDay();
+                checkOutDate = LocalDate.parse(checkOut, dateFormatter).atTime(23, 59, 59);
+                System.out.println("Parse thành công với ISO_DATE: " + checkInDate + " - " + checkOutDate);
+            } catch (DateTimeParseException ex) {
+                System.out.println("Lỗi parse ngày tháng: " + ex.getMessage());
+                throw new AppException(ErrorCode.INVALID_BOOKING_DATE);
+            }
+        }
+        
+        RoomType type = null;
+        if (roomType != null && !roomType.isEmpty()) {
+            try {
+                type = RoomType.valueOf(roomType.toUpperCase());
+                System.out.println("Loại phòng: " + type);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Lỗi loại phòng không hợp lệ: " + roomType);
+                throw new AppException(ErrorCode.INVALID_ROOM_TYPE);
+            }
+        }
 
-        return roomRepository.findAvailableRooms(checkInDate, checkOutDate)
-                .stream()
+        List<Room> availableRooms;
+        if (type != null) {
+            availableRooms = roomRepository.findAvailableRoomsByType(checkInDate, checkOutDate, type);
+        } else {
+            availableRooms = roomRepository.findAvailableRooms(checkInDate, checkOutDate);
+        }
+        
+        System.out.println("Số phòng khả dụng tìm được: " + availableRooms.size());
+        if (availableRooms.isEmpty()) {
+            System.out.println("Không tìm thấy phòng nào khả dụng trong khoảng thời gian: " + checkInDate + " - " + checkOutDate);
+        }
+
+        return availableRooms.stream()
                 .map(roomMapper::toRoomResponse)
                 .toList();
     }
@@ -76,7 +118,17 @@ public class RoomService {
         }
 
         Room room = roomMapper.toRoom(request);
-        room.setStatus(RoomStatus.AVAILABLE); // Set mặc định là AVAILABLE
+        room.setStatus(RoomStatus.AVAILABLE);
+
+        if (request.getPhoto() != null && !request.getPhoto().isEmpty()) {
+            try {
+                Blob photo = new SerialBlob(request.getPhoto().getBytes());
+                room.setPhoto(photo);
+            } catch (IOException | SQLException e) {
+                throw new RuntimeException("Không thể xử lý ảnh: " + e.getMessage());
+            }
+        }
+
         return roomMapper.toRoomResponse(roomRepository.save(room));
     }
 
@@ -85,13 +137,21 @@ public class RoomService {
         Room existingRoom = roomRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
 
-        // Cập nhật thông tin
         existingRoom.setRoomNumber(request.getRoomNumber());
         existingRoom.setType(request.getType());
         existingRoom.setPrice(request.getPrice());
         existingRoom.setCapacity(request.getCapacity());
         existingRoom.setDescription(request.getDescription());
         existingRoom.setStatus(request.getStatus());
+
+        if (request.getPhoto() != null && !request.getPhoto().isEmpty()) {
+            try {
+                Blob photo = new SerialBlob(request.getPhoto().getBytes());
+                existingRoom.setPhoto(photo);
+            } catch (IOException | SQLException e) {
+                throw new RuntimeException("Không thể xử lý ảnh: " + e.getMessage());
+            }
+        }
 
         return roomMapper.toRoomResponse(roomRepository.save(existingRoom));
     }
@@ -100,25 +160,5 @@ public class RoomService {
     public void deleteRoom(Long id) {
         Optional<Room> room = roomRepository.findById(id);
         roomRepository.deleteById(room.get().getId());
-    }
-
-    @Transactional
-    public RoomResponse uploadRoomImage(Long roomId, MultipartFile file) {
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new AppException(ErrorCode.ROOM_NOT_EXISTED));
-
-        try {
-            String uploadDir = "uploads/rooms/";
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path filePath = Paths.get(uploadDir + fileName);
-            Files.createDirectories(filePath.getParent());
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-            room.setImagePath("/uploads/rooms/" + fileName);
-            return roomMapper.toRoomResponse(roomRepository.save(room));
-
-        } catch (IOException e) {
-            throw new RuntimeException("Không thể lưu ảnh: " + e.getMessage());
-        }
     }
 }

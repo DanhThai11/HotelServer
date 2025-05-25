@@ -47,6 +47,7 @@ public class HotelService {
     @Transactional
     public ServiceResponse createService(ServiceRequest request) {
         ServiceHotel service = serviceMapper.toServiceHotel(request);
+        service.setIsAvailable(request.getIsAvailable() != null ? request.getIsAvailable() : true);
         return serviceMapper.toServiceResponse(serviceRepository.save(service));
     }
 

@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bills")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
 public class BillController {
     private final BillManagementService billService;
 

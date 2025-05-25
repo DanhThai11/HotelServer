@@ -98,7 +98,6 @@ com/rex/hotel/mapper/InventoryItemMapperImpl.class
 com/rex/hotel/exception/ErrorCode.class
 com/rex/hotel/mapper/InventoryItemMapper.class
 com/rex/hotel/util/SecurityUtils.class
-com/rex/hotel/config/WebConfig$1.class
 com/rex/hotel/repository/BillRepository.class
 com/rex/hotel/repository/BookingRepository.class
 com/rex/hotel/dto/response/BillItemResponse$BillItemResponseBuilder.class

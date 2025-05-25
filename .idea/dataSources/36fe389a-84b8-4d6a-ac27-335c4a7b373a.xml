@@ -1620,7 +1620,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Type>btree</Type>
     </index>
     <column id="406" parent="320" name="id">
-      <AutoIncrement>7</AutoIncrement>
+      <AutoIncrement>9</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>bigint|0s</StoredType>
@@ -1651,9 +1651,9 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Position>7</Position>
       <StoredType>enum(&apos;STANDARD&apos;, &apos;DELUXE&apos;, &apos;SUITE&apos;, &apos;EXECUTIVE&apos;)|0e</StoredType>
     </column>
-    <column id="413" parent="320" name="image_url">
+    <column id="413" parent="320" name="photo">
       <Position>8</Position>
-      <StoredType>varchar(255)|0s</StoredType>
+      <StoredType>mediumblob|0s</StoredType>
     </column>
     <index id="414" parent="320" name="PRIMARY">
       <ColNames>id</ColNames>

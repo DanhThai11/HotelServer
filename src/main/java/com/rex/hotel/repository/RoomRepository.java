@@ -25,10 +25,14 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Query("SELECT r FROM Room r WHERE r.id NOT IN " +
            "(SELECT DISTINCT b.room.id FROM Booking b " +
            "WHERE b.status != 'CANCELLED' AND " +
-           "((b.checkInDate BETWEEN ?1 AND ?2) OR " +
-           "(b.checkOutDate BETWEEN ?1 AND ?2) OR " +
-           "(b.checkInDate <= ?1 AND b.checkOutDate >= ?2)))")
+           "((b.checkInDate <= ?2 AND b.checkOutDate >= ?1)))")
     List<Room> findAvailableRooms(LocalDateTime checkIn, LocalDateTime checkOut);
+
+    @Query("SELECT r FROM Room r WHERE r.type = ?3 AND r.id NOT IN " +
+           "(SELECT DISTINCT b.room.id FROM Booking b " +
+           "WHERE b.status != 'CANCELLED' AND " +
+           "((b.checkInDate <= ?2 AND b.checkOutDate >= ?1)))")
+    List<Room> findAvailableRoomsByType(LocalDateTime checkIn, LocalDateTime checkOut, RoomType type);
 
     List<Room> findByCapacityGreaterThanEqual(Integer capacity);
 
