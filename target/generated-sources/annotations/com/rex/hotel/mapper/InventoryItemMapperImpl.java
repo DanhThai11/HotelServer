@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-05T21:39:44+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.2 (Eclipse Adoptium)"
+    date = "2025-06-06T00:23:02+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class InventoryItemMapperImpl implements InventoryItemMapper {
@@ -21,15 +21,15 @@ public class InventoryItemMapperImpl implements InventoryItemMapper {
 
         InventoryItem.InventoryItemBuilder inventoryItem = InventoryItem.builder();
 
-        inventoryItem.name( request.getName() );
-        inventoryItem.code( request.getCode() );
         inventoryItem.category( request.getCategory() );
-        inventoryItem.quantity( request.getQuantity() );
-        inventoryItem.unit( request.getUnit() );
-        inventoryItem.minQuantity( request.getMinQuantity() );
-        inventoryItem.price( request.getPrice() );
-        inventoryItem.supplier( request.getSupplier() );
+        inventoryItem.code( request.getCode() );
         inventoryItem.description( request.getDescription() );
+        inventoryItem.minQuantity( request.getMinQuantity() );
+        inventoryItem.name( request.getName() );
+        inventoryItem.price( request.getPrice() );
+        inventoryItem.quantity( request.getQuantity() );
+        inventoryItem.supplier( request.getSupplier() );
+        inventoryItem.unit( request.getUnit() );
 
         return inventoryItem.build();
     }
@@ -40,14 +40,14 @@ public class InventoryItemMapperImpl implements InventoryItemMapper {
             return;
         }
 
-        inventoryItem.setName( request.getName() );
-        inventoryItem.setCode( request.getCode() );
         inventoryItem.setCategory( request.getCategory() );
-        inventoryItem.setQuantity( request.getQuantity() );
-        inventoryItem.setUnit( request.getUnit() );
-        inventoryItem.setMinQuantity( request.getMinQuantity() );
-        inventoryItem.setPrice( request.getPrice() );
-        inventoryItem.setSupplier( request.getSupplier() );
+        inventoryItem.setCode( request.getCode() );
         inventoryItem.setDescription( request.getDescription() );
+        inventoryItem.setMinQuantity( request.getMinQuantity() );
+        inventoryItem.setName( request.getName() );
+        inventoryItem.setPrice( request.getPrice() );
+        inventoryItem.setQuantity( request.getQuantity() );
+        inventoryItem.setSupplier( request.getSupplier() );
+        inventoryItem.setUnit( request.getUnit() );
     }
 }

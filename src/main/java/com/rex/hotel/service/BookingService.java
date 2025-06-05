@@ -11,6 +11,7 @@ import com.rex.hotel.mapper.UserMapper;
 import com.rex.hotel.model.Booking;
 import com.rex.hotel.model.Room;
 import com.rex.hotel.model.User;
+import com.rex.hotel.model.Bill;
 import com.rex.hotel.repository.BookingRepository;
 import com.rex.hotel.repository.RoomRepository;
 import com.rex.hotel.repository.UserRepository;
@@ -134,10 +135,14 @@ public class BookingService {
         Booking savedBooking = bookingRepository.save(booking);
 
         // --- Tạo Bill cho Booking vừa tạo ---
-        billManagementService.createBillForBooking(savedBooking);
+        Bill savedBill = billManagementService.createBillForBooking(savedBooking);
         // -------------------------------------
 
-        return userMapper.toBookingResponse(savedBooking);
+        // Map Booking sang BookingResponse và thêm Bill ID vào response
+        BookingResponse bookingResponse = userMapper.toBookingResponse(savedBooking);
+        bookingResponse.setBillId(savedBill.getId());
+
+        return bookingResponse;
     }
 
     public BookingResponse updateBooking(Long id, BookingRequest request) {

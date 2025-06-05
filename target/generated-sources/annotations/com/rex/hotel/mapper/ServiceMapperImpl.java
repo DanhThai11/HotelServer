@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-05T21:39:44+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.2 (Eclipse Adoptium)"
+    date = "2025-06-06T00:23:02+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class ServiceMapperImpl implements ServiceMapper {
@@ -22,11 +22,11 @@ public class ServiceMapperImpl implements ServiceMapper {
 
         ServiceHotel.ServiceHotelBuilder serviceHotel = ServiceHotel.builder();
 
-        serviceHotel.name( request.getName() );
         serviceHotel.category( request.getCategory() );
-        serviceHotel.price( request.getPrice() );
         serviceHotel.description( request.getDescription() );
         serviceHotel.isAvailable( request.getIsAvailable() );
+        serviceHotel.name( request.getName() );
+        serviceHotel.price( request.getPrice() );
 
         return serviceHotel.build();
     }
@@ -39,11 +39,11 @@ public class ServiceMapperImpl implements ServiceMapper {
 
         ServiceResponse.ServiceResponseBuilder serviceResponse = ServiceResponse.builder();
 
+        serviceResponse.category( service.getCategory() );
+        serviceResponse.description( service.getDescription() );
         serviceResponse.id( service.getId() );
         serviceResponse.name( service.getName() );
-        serviceResponse.description( service.getDescription() );
         serviceResponse.price( service.getPrice() );
-        serviceResponse.category( service.getCategory() );
 
         return serviceResponse.build();
     }
@@ -54,10 +54,10 @@ public class ServiceMapperImpl implements ServiceMapper {
             return;
         }
 
-        service.setName( request.getName() );
         service.setCategory( request.getCategory() );
-        service.setPrice( request.getPrice() );
         service.setDescription( request.getDescription() );
         service.setIsAvailable( request.getIsAvailable() );
+        service.setName( request.getName() );
+        service.setPrice( request.getPrice() );
     }
 }

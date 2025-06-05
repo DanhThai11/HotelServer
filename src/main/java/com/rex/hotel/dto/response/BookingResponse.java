@@ -30,6 +30,7 @@ public class BookingResponse {
      BookingStatus status;
      LocalDateTime createdAt;
      LocalDateTime updatedAt;
+     Long billId;
 
     @Getter
     @Setter

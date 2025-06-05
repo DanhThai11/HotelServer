@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-05T21:39:44+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.2 (Eclipse Adoptium)"
+    date = "2025-06-06T00:24:30+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -25,11 +25,11 @@ public class UserMapperImpl implements UserMapper {
 
         User.UserBuilder user = User.builder();
 
-        user.username( request.getUsername() );
-        user.password( request.getPassword() );
-        user.fullName( request.getFullName() );
         user.email( request.getEmail() );
+        user.fullName( request.getFullName() );
+        user.password( request.getPassword() );
         user.phoneNumber( request.getPhoneNumber() );
+        user.username( request.getUsername() );
 
         return user.build();
     }
@@ -42,15 +42,15 @@ public class UserMapperImpl implements UserMapper {
 
         UserResponse.UserResponseBuilder userResponse = UserResponse.builder();
 
-        userResponse.id( user.getId() );
-        userResponse.username( user.getUsername() );
-        userResponse.fullName( user.getFullName() );
         userResponse.email( user.getEmail() );
+        userResponse.fullName( user.getFullName() );
+        userResponse.id( user.getId() );
         userResponse.phoneNumber( user.getPhoneNumber() );
         Set<String> set = user.getRoles();
         if ( set != null ) {
             userResponse.roles( new LinkedHashSet<String>( set ) );
         }
+        userResponse.username( user.getUsername() );
 
         return userResponse.build();
     }
@@ -61,8 +61,8 @@ public class UserMapperImpl implements UserMapper {
             return;
         }
 
-        user.setFullName( request.getFullName() );
         user.setEmail( request.getEmail() );
+        user.setFullName( request.getFullName() );
         user.setPhoneNumber( request.getPhoneNumber() );
     }
 }

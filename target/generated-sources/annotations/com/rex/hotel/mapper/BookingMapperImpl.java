@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-06-05T21:39:43+0700",
-    comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.2 (Eclipse Adoptium)"
+    date = "2025-06-06T00:24:30+0700",
+    comments = "version: 1.5.2.Final, compiler: Eclipse JDT (IDE) 3.42.0.v20250514-1000, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
 public class BookingMapperImpl implements BookingMapper {
@@ -28,14 +28,14 @@ public class BookingMapperImpl implements BookingMapper {
         bookingResponse.user( userToUserSummary( booking.getUser() ) );
         bookingResponse.roomType( bookingRoomType( booking ) );
         bookingResponse.roomNumber( bookingRoomRoomNumber( booking ) );
-        bookingResponse.id( booking.getId() );
         bookingResponse.checkInDate( booking.getCheckInDate() );
         bookingResponse.checkOutDate( booking.getCheckOutDate() );
+        bookingResponse.createdAt( booking.getCreatedAt() );
+        bookingResponse.id( booking.getId() );
         bookingResponse.numberOfGuests( booking.getNumberOfGuests() );
-        bookingResponse.totalAmount( booking.getTotalAmount() );
         bookingResponse.specialRequests( booking.getSpecialRequests() );
         bookingResponse.status( booking.getStatus() );
-        bookingResponse.createdAt( booking.getCreatedAt() );
+        bookingResponse.totalAmount( booking.getTotalAmount() );
         bookingResponse.updatedAt( booking.getUpdatedAt() );
 
         return bookingResponse.build();
