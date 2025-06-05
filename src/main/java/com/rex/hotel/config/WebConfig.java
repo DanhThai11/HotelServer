@@ -12,14 +12,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        String vercelUrl = System.getenv("VERCEL_URL");
-        registry.addMapping("/**")
-                .allowedOrigins(vercelUrl != null ? vercelUrl : "https://11da-27-64-72-203.ngrok-free.app/")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true)
-                .exposedHeaders("Authorization")
-                .maxAge(3600);
+        registry.addMapping("/**") // Áp dụng cho tất cả endpoint
+                .allowedOrigins("*") // Cho phép tất cả nguồn gốc
+                .allowedMethods("*") // Cho phép tất cả phương thức (GET, POST, PUT, DELETE, v.v.)
+                .allowedHeaders("*"); // Cho phép tất cả header
     }
 
     @Override
