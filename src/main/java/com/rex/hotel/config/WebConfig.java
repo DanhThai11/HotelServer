@@ -12,7 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        String ngrokUrl = System.getenv("NGROK_URL"); // Lấy URL từ biến môi trường
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:5173", "https://v0-rex-hotel.vercel.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
