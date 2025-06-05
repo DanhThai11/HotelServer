@@ -58,6 +58,7 @@
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/request/ChangePasswordRequest.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/enums/Role.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/request/ItemRequest.java
+/Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/example/rexhotel/config/DotenvConfig.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/response/BillServiceResponse.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/response/BookingResponse.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/model/EmailVerificationToken.java
@@ -68,10 +69,12 @@
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/repository/ServiceRepository.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/service/AuthService.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/request/BillServiceRequest.java
+/Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/example/rexhotel/config/PropertyConfig.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/mapper/BillMapper.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/mapper/ServiceMapper.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/exception/AppException.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/response/InventoryItemResponse.java
+/Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/example/rexhotel/config/EnvConfig.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/request/BillItemRequest.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/mapper/BookingMapper.java
 /Users/robin/iCloud Drive (Archive)/Desktop/Final/server/src/main/java/com/rex/hotel/dto/request/RegisterRequest.java
