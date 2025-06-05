@@ -19,7 +19,7 @@ public class EmailService {
 
     public void sendVerificationEmail(String toEmail, String token) throws MessagingException {
         String subject = "Xác thực tài khoản của bạn";
-        String confirmationUrl = "http://localhost:8080/auth/verify?token=" + token;
+        String confirmationUrl = "https://hotelserver-k74o.onrender.com/auth/verify?token=" + token;
 
         // HTML email template
         String htmlContent = """
