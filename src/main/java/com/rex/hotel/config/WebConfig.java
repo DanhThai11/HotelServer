@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         String vercelUrl = System.getenv("VERCEL_URL");
         registry.addMapping("/**")
-                .allowedOrigins(vercelUrl != null ? vercelUrl : "https://hotel-client-ruddy.vercel.app")
+                .allowedOrigins(vercelUrl != null ? vercelUrl : "https://11da-27-64-72-203.ngrok-free.app/")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
