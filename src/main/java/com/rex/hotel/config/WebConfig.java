@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         String ngrokUrl = System.getenv("NGROK_URL"); // Lấy URL từ biến môi trường
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173", ngrokUrl != null ? ngrokUrl : "https://default.ngrok.io")
+                .allowedOrigins("http://localhost:5173", "https://9c9c-27-64-72-203.ngrok-free.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
