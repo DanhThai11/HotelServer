@@ -12,13 +12,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        String ngrokUrl = System.getenv("NGROK_URL"); // Lấy URL từ biến môi trường
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173") // URL của frontend
+                .allowedOrigins("http://localhost:5173", ngrokUrl != null ? ngrokUrl : "https://default.ngrok.io")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)
                 .exposedHeaders("Authorization")
-                .maxAge(3600); // Cache preflight request trong 1 giờ
+                .maxAge(3600);
     }
 
     @Override
