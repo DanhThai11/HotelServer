@@ -31,13 +31,15 @@ public class SecurityConfig {
     @Autowired
     private CustomJwtDecoder customJwtDecoder;
 
-    private final String[] PUBLIC_ENDPOINTS = {"/auth/**","/users","/uploads/rooms/**","/api/rooms/types","api/rooms/**","/api/payment/vnpay/create", "/api/payment/vnpay/return"};
+    private final String[] PUBLIC_ENDPOINTS = {"/auth/**","/users","/uploads/rooms/**","/api/rooms/types","/api/rooms/**","/api/payment/vnpay/create", "/api/payment/vnpay/return"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(request -> request
+        httpSecurity
+                .authorizeHttpRequests(request -> request
                 .requestMatchers(PUBLIC_ENDPOINTS).permitAll()  // Cho phép mọi phương thức
                 .anyRequest().authenticated()
+
         );
 
         ;

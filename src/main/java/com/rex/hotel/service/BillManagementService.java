@@ -4,16 +4,17 @@ import com.rex.hotel.dto.request.BillItemRequest;
 import com.rex.hotel.dto.request.BillRequest;
 import com.rex.hotel.dto.request.BillServiceRequest;
 import com.rex.hotel.dto.response.BillResponse;
+import com.rex.hotel.enums.BillStatus;
+import com.rex.hotel.enums.BookingStatus;
 import com.rex.hotel.exception.AppException;
 import com.rex.hotel.exception.ErrorCode;
 import com.rex.hotel.mapper.BillMapper;
 import com.rex.hotel.model.*;
-import com.rex.hotel.enums.BillStatus;
 import com.rex.hotel.repository.*;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -21,18 +22,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Service
+@Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class BillManagementService {
-     BillRepository billRepository;
-     BookingRepository bookingRepository;
-     BillItemRepository billItemRepository;
-     BillServiceRepository billServiceRepository;InventoryItemRepository inventoryItemRepository;
-     BillMapper billMapper;
-     ServiceRepository serviceRepository;
-     InventoryItemRepository itemRepository;
-
+    private final BillRepository billRepository;
+    private final BookingRepository bookingRepository;
+    private final BillItemRepository billItemRepository;
+    private final BillServiceRepository billServiceRepository;
+    private final InventoryItemRepository inventoryItemRepository;
+    private final BillMapper billMapper;
+    private final ServiceRepository serviceRepository;
+    private final InventoryItemRepository itemRepository;
 
     public List<BillResponse> getAllBills() {
         return billRepository.findAll().stream()
@@ -42,13 +43,13 @@ public class BillManagementService {
 
     public BillResponse getBillById(Long id) {
         Bill bill = billRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hóa đơn với ID: " + id));
+                .orElseThrow(() -> new AppException(ErrorCode.BILL_NOT_EXISTED));
         return billMapper.toBillResponse(bill);
     }
 
     public BillResponse getBillByBookingId(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
-                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đặt phòng với ID: " + bookingId));
+                .orElseThrow(() -> new AppException(ErrorCode.BOOKING_NOT_FOUND));
         return billMapper.toBillResponse(billRepository.findByBooking(booking));
     }
 
@@ -105,9 +106,6 @@ public class BillManagementService {
         return billMapper.toBillResponse(billRepository.save(bill));
     }
 
-
-
-
     @Transactional
     public BillResponse updateBill(Long id, BillRequest request) {
         Bill bill = billRepository.findById(id)
@@ -124,7 +122,6 @@ public class BillManagementService {
 
         return billMapper.toBillResponse(billRepository.save(bill));
     }
-
 
     @Transactional
     public BillResponse addBillItem(Long billId, BillItemRequest request) {
@@ -178,7 +175,6 @@ public class BillManagementService {
         return billMapper.toBillResponse(billRepository.save(bill));
     }
 
-
     @Transactional
     public BillResponse removeBillItem(Long billId, Long itemId) {
         Bill bill = getBillEntityOrThrow(billId);
@@ -199,7 +195,6 @@ public class BillManagementService {
         return billMapper.toBillResponse(billRepository.save(bill));
     }
 
-
     @Transactional
     public BillResponse removeBillService(Long billId, Long serviceId) {
         Bill bill = getBillEntityOrThrow(billId);
@@ -217,11 +212,21 @@ public class BillManagementService {
     }
 
     @Transactional
-    public BillResponse payBill(Long id) {
-        Bill bill = getBillEntityOrThrow(id);
+    public BillResponse payBill(Long billId) {
+        Bill bill = billRepository.findById(billId)
+                .orElseThrow(() -> new AppException(ErrorCode.BILL_NOT_FOUND));
+
+        if (bill.getStatus() == BillStatus.PAID) {
+            throw new AppException(ErrorCode.BILL_ALREADY_PAID);
+        }
 
         bill.setStatus(BillStatus.PAID);
         bill.setPaidAt(LocalDateTime.now());
+
+        // Cập nhật trạng thái Booking sang CONFIRMED khi Bill được thanh toán
+        Booking booking = bill.getBooking();
+        booking.setStatus(BookingStatus.CONFIRMED);
+        bookingRepository.save(booking);
 
         return billMapper.toBillResponse(billRepository.save(bill));
     }
@@ -236,48 +241,32 @@ public class BillManagementService {
                 .toList();
     }
 
-//    private void updateTotalAmount(Bill bill) {
-//
-//        double itemsTotal = bill.getItems().stream()
-//                .mapToDouble(item -> item.getQuantity() * item.getPrice().doubleValue())
-//                .sum();
-//
-//        double servicesTotal = bill.getServices().stream()
-//                .mapToDouble(service -> service.getQuantity() * service.getPrice().doubleValue())
-//                .sum();
-//
-//        bill.setTotalAmount(bill.getRoomCharge().add(
-//                java.math.BigDecimal.valueOf(itemsTotal + servicesTotal)));
-//    }
-private void updateTotalAmount(Bill bill) {
-    BigDecimal total = BigDecimal.ZERO;
+    private void updateTotalAmount(Bill bill) {
+        BigDecimal total = BigDecimal.ZERO;
 
-    // Tiền phòng (niêm yết)
-    if (bill.getRoomCharge() != null) {
-        total = total.add(bill.getRoomCharge());
+        // Tiền phòng (niêm yết)
+        if (bill.getRoomCharge() != null) {
+            total = total.add(bill.getRoomCharge());
+        }
+
+        // Tiền items (món ăn, đồ dùng)
+        if (bill.getItems() != null) {
+            BigDecimal itemsTotal = bill.getItems().stream()
+                    .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            total = total.add(itemsTotal);
+        }
+
+        // Tiền services (dịch vụ thêm)
+        if (bill.getServices() != null) {
+            BigDecimal servicesTotal = bill.getServices().stream()
+                    .map(BillService::getPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            total = total.add(servicesTotal);
+        }
+
+        bill.setTotalAmount(total);
     }
-
-    // Tiền items (món ăn, đồ dùng)
-    if (bill.getItems() != null) {
-        BigDecimal itemsTotal = bill.getItems().stream()
-                .map(item -> item.getPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        total = total.add(itemsTotal);
-    }
-
-    // Tiền services (dịch vụ thêm)
-    if (bill.getServices() != null) {
-        BigDecimal servicesTotal = bill.getServices().stream()
-                .map(BillService::getPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        total = total.add(servicesTotal);
-    }
-
-    bill.setTotalAmount(total);
-}
-
-
-
 
     private Bill getBillEntityOrThrow(Long billId) {
         return billRepository.findById(billId)

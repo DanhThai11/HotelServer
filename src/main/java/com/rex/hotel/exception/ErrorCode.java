@@ -36,6 +36,7 @@ public enum ErrorCode {
     INVALID_ROOM_TYPE(1028,"Loại phòng không hợp lệ", HttpStatus.BAD_REQUEST),
     INVALID_PRICE(1029,"Giá phòng không hợp lệ", HttpStatus.BAD_REQUEST),
     INVALID_SIGNATURE(1030,"Chữ ký không hợp lệ", HttpStatus.BAD_REQUEST),
+    BILL_NOT_FOUND(404, "Không tìm thấy hóa đơn", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatus status) {
